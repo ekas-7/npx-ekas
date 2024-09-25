@@ -1,0 +1,26 @@
+{
+  "name": "ekas",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "ekas": "./index.js",
+    "get-set-node-oss": "./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "figlet": "^1.7.0",
+    "gradient-string": "^2.0.2",
+    "nanospinner": "^1.1.0",
+    "nodemon": "^3.1.0",
+    "terminal-link": "^3.0.0"
+  }
+}
