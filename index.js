@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { createSpinner } from 'nanospinner';
 import chalk from 'chalk';
 import terminalLink from 'terminal-link';
@@ -112,7 +114,7 @@ const main = async () => {
     spinner3.success({ text: '📣 Message loaded successfully!' });
 
     printHeader('Message');
-    console.log(gradient.rainbow('I am amped to crush it in open source and tech, ready to innovate, learn, and leave my mark!'));
+    console.log(gradient.rainbow('I am amped to contribute it in open source and tech, ready to innovate, learn, and leave my mark!'));
     console.log(gradient.rainbow('Thanks for checking out my CLI!'));
 };
 
