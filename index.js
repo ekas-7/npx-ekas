@@ -22,7 +22,7 @@ const config = {
     linkedin: 'https://www.linkedin.com/in/ekaspreet-singh-atwal-b7570b269/',
     twitter: 'https://x.com/Ekas_7',
     email: 'ekaspreetatwal@gmail.com',
-    mobile: '+91-8872059425',
+  
 
     // Additional resume/context added per request (keeps styling unchanged)
     contact: {
@@ -143,10 +143,11 @@ const printPersonalDetails = () => {
     const details = [
         { label: 'NAME', value: config.name },
         { label: 'STATUS', value: config.status },
+        { label: 'EMAIL', value: config.email },
+        
         { label: 'GITHUB', value: terminalLink('Check it out!', config.github) },
         { label: 'LINKEDIN', value: terminalLink('Connect with me!', config.linkedin) },
         { label: 'TWITTER', value: terminalLink('Follow me!', config.twitter) },
-        { label: 'EMAIL', value: config.email },
         { label: 'PORTFOLIO', value: terminalLink('Visit', config.contact?.portfolio || '') }
     ];
 
@@ -159,22 +160,84 @@ const printExperience = () => {
     config.experience.forEach(exp => {
         console.log(chalk.bold(exp.company + ' - ' + exp.role));
         console.log(chalk.dim(`${exp.dates} | ${exp.location}`));
-        exp.bullets.forEach(b => console.log('  ' + chalk.cyan('•') + ' ' + b));
+        exp.bullets.forEach(bullet => {
+            // Wrap long bullet points properly
+            const maxLength = 80;
+            if (bullet.length > maxLength) {
+                const words = bullet.split(' ');
+                let currentLine = '';
+                let isFirstLine = true;
+                
+                words.forEach(word => {
+                    if ((currentLine + word).length > maxLength && currentLine.trim()) {
+                        if (isFirstLine) {
+                            console.log('  ' + chalk.cyan('•') + ' ' + currentLine.trim());
+                            isFirstLine = false;
+                        } else {
+                            console.log('    ' + currentLine.trim());
+                        }
+                        currentLine = word + ' ';
+                    } else {
+                        currentLine += word + ' ';
+                    }
+                });
+                
+                if (currentLine.trim()) {
+                    if (isFirstLine) {
+                        console.log('  ' + chalk.cyan('•') + ' ' + currentLine.trim());
+                    } else {
+                        console.log('    ' + currentLine.trim());
+                    }
+                }
+            } else {
+                console.log('  ' + chalk.cyan('•') + ' ' + bullet);
+            }
+        });
         console.log();
     });
 };
 
 const printAchievements = () => {
-    console.log(chalk.bold('\nAchievements'));
-    config.achievements.forEach(a => console.log(chalk.cyan('•') + ' ' + a));
+    config.achievements.forEach(achievement => {
+        // Wrap long achievements properly
+        const maxLength = 80;
+        if (achievement.length > maxLength) {
+            const words = achievement.split(' ');
+            let currentLine = '';
+            let isFirstLine = true;
+            
+            words.forEach(word => {
+                if ((currentLine + word).length > maxLength && currentLine.trim()) {
+                    if (isFirstLine) {
+                        console.log(chalk.cyan('•') + ' ' + currentLine.trim());
+                        isFirstLine = false;
+                    } else {
+                        console.log('  ' + currentLine.trim());
+                    }
+                    currentLine = word + ' ';
+                } else {
+                    currentLine += word + ' ';
+                }
+            });
+            
+            if (currentLine.trim()) {
+                if (isFirstLine) {
+                    console.log(chalk.cyan('•') + ' ' + currentLine.trim());
+                } else {
+                    console.log('  ' + currentLine.trim());
+                }
+            }
+        } else {
+            console.log(chalk.cyan('•') + ' ' + achievement);
+        }
+    });
     console.log();
 };
 
 const printProjects = () => {
-    console.log(chalk.bold('\nProjects'));
-    config.projects.forEach(p => {
-        console.log(chalk.green.bold(p.name) + ' - ' + p.desc);
-        console.log(chalk.dim('  Tech: ' + p.tech.join(', ')));
+    config.projects.forEach(project => {
+        console.log(chalk.green.bold(project.name) + ' - ' + project.desc);
+        console.log(chalk.dim('  Tech: ' + project.tech.join(', ')));
         console.log();
     });
 };
@@ -188,16 +251,14 @@ const printEducation = () => {
 };
 
 const printCodingProfiles = () => {
-    console.log(chalk.bold('\nCoding Profiles & Certifications'));
-    Object.entries(config.codingProfiles).forEach(([k, v]) => {
-        console.log(`${chalk.green(k.toUpperCase())}: ${chalk.cyan(v)}`);
+    Object.entries(config.codingProfiles).forEach(([platform, achievement]) => {
+        console.log(`${chalk.green(platform.toUpperCase())}: ${chalk.cyan(achievement)}`);
     });
     console.log();
 };
 
 const printCoursework = () => {
-    console.log(chalk.bold('\nRelevant Coursework'));
-    console.log('• ' + config.coursework.join(', '));
+    console.log(chalk.cyan('•') + ' ' + config.coursework.join(', '));
     console.log();
 };
 
@@ -242,13 +303,19 @@ const main = async () => {
     printHeader('Experience');
     printExperience();
 
+    printHeader('Achievements');
     printAchievements();
 
+    printHeader('Projects');
     printProjects();
 
+    printHeader('Coding Profiles');
     printCodingProfiles();
 
+    printHeader('Coursework');
     printCoursework();
 };
 
-main().catch(console.error);
+main().catch(console.error).finally(() => {
+    process.exit(0);
+});
