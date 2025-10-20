@@ -1,6 +1,6 @@
 # npx-ekas
 
-`npx-ekas` is a simple, yet powerful, personal CLI card built using Node.js. It serves as a digital business card that you can share quickly via the `npx` command.
+`npx-ekas` is a simple, yet powerful, personal CLI card built using Node.js. It serves as a digital business card that you can share quickly via the `npx` command
 <img width="1270" alt="Screenshot 2025-01-02 at 12 20 39 AM" src="https://github.com/user-attachments/assets/5351000f-aa9b-42e9-8d07-2bad78ec39f2" />
 
 ---
